@@ -1,4 +1,5 @@
 import React from 'react';
+import { parseColors } from '../lib/ColorUtils'
 import './PaletteEditor.css';
 
 interface Props {
@@ -26,15 +27,9 @@ class PaletteEditor extends React.Component<Props, State> {
         this.setState({ edit: !this.state.edit })
     }
 
-    saveColors() {
-        let colors = this.state.colorInput.split("\n");
-        let validColors = colors.reduce((acc, c) => {
-            let match = c.match(/#[0-9A-Fa-f]{6}/g)
-            if (match && match.length === 1) {
-                acc.push(match[0])
-            }
-            return acc
-        }, new Array<string>())
+    saveColors(colorInput: string) {
+        let colors = colorInput.split("\n");
+        let validColors = parseColors(colorInput);
         this.props.save(validColors);
         this.setState({ edit: false, colorInput: "" })
     }
@@ -51,7 +46,7 @@ class PaletteEditor extends React.Component<Props, State> {
                         <textarea value={this.state.colorInput} onChange={(e) => this.handleChange(e)}></textarea>
                     </div>
                     <div>
-                        <button onClick={() => this.saveColors()}>save</button>
+                        <button onClick={() => this.saveColors(this.state.colorInput)}>save</button>
                     </div>
                 </div>
             )
