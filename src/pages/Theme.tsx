@@ -15,6 +15,12 @@ interface State {
 }
 
 class Theme extends React.Component<Props, State> {
+
+    constructor(props: Props){
+        super(props)
+        this.state = {theme: undefined}
+    }
+
     componentDidMount() {
         const { themeId } = this.props.match.params
         let theme = loadTheme(themeId)
@@ -33,7 +39,7 @@ class Theme extends React.Component<Props, State> {
                    
                     <div>
                         <div>{palette.name}</div>
-                        <Palette colors={palette.colors}></Palette>
+                        <Palette palette={palette}></Palette>
                     </div>
                 ))}
             </div >

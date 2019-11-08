@@ -1,15 +1,15 @@
 import React from 'react';
 import './Palette.css';
-import { Color } from '../lib/Types'
+import { Color, ColorPalette } from '../lib/Types'
 
 interface PaletteProps {
-    colors: Color[]
+    palette: ColorPalette
 }
 
-const Palette: React.FC<PaletteProps> = ({ colors }) => {
+const Palette: React.FC<PaletteProps> = ({ palette }) => {
     return (
         <div className="colorPalette">
-            {colors.map(c => (
+            {palette.colors.map(c => (
                 <div key={c.name} className="color" style={{ backgroundColor: c.colorCode }}>
                     {c.colorCode} - {c.name}
                 </div>

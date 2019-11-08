@@ -1,9 +1,11 @@
 import React from "react";
 import "./App.css";
 import { ColorTheme } from "./lib/Types";
-import { BrowserRouter, NavLink, Route } from "react-router-dom"
+import { BrowserRouter, Switch, NavLink, Route } from "react-router-dom"
 import { loadThemes, saveTheme } from "./lib/Storage"
 import Theme from './pages/Theme'
+import Overview from "./pages/Overview";
+import ThemeEditor from "./pages/ThemeEditor";
 
 interface Props { }
 
@@ -46,7 +48,12 @@ class App extends React.Component<Props, State> {
               </ul>
             </div>
             <div className="box">
-              <Route path="/:themeId" component={Theme} />
+              <Switch>
+                <Route exact path="/" component={Overview} />
+                <Route path="/theme/:themeId" component={Theme} />
+                <Route path="/editor" component={ThemeEditor} />
+              </Switch>
+
               {/* <PaletteEditor save={c => this.saveNewColors(c)}></PaletteEditor> */}
             </div>
           </div>

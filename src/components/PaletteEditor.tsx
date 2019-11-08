@@ -1,9 +1,10 @@
 import React from 'react';
 import { parseColors } from '../lib/ColorUtils'
 import './PaletteEditor.css';
+import { ColorPalette } from '../lib/Types';
 
 interface Props {
-    save(colors: string[]): any
+    save(colors: ColorPalette): any
 }
 
 interface State {
@@ -30,7 +31,7 @@ class PaletteEditor extends React.Component<Props, State> {
     saveColors(colorInput: string) {
         let colors = colorInput.split("\n");
         let validColors = parseColors(colorInput);
-        this.props.save(validColors);
+        this.props.save({ name: '', colors: validColors.map(colorCode => { return { colorCode } }) });
         this.setState({ edit: false, colorInput: "" })
     }
 

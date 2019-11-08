@@ -1,6 +1,6 @@
 export type Color = {
     colorCode: string;
-    name: string;
+    name?: string;
 }
 
 export type ColorPalette = {
