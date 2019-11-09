@@ -1,15 +1,18 @@
 import React from 'react';
 import { parseColors } from '../lib/ColorUtils'
 import './PaletteEditor.css';
-import { ColorPalette } from '../lib/Types';
+import { ColorPalette, Color } from '../lib/Types';
+import ColorEditor from './ColorEditor';
 
 interface Props {
     save(colors: ColorPalette): any
+    palette?: ColorPalette
 }
 
 interface State {
-    colors: string[];
+    palette: ColorPalette;
     edit: boolean;
+    editColor: boolean;
     colorInput: string;
 }
 
@@ -18,8 +21,9 @@ class PaletteEditor extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            colors: [],
+            palette: props.palette || { name: '', colors: [{ colorCode: "#FFFFFF" }] },
             edit: false,
+            editColor: false,
             colorInput: "#1e2223\n#292f31\n#353d3e\n#414a4c"
         }
     }
@@ -39,13 +43,42 @@ class PaletteEditor extends React.Component<Props, State> {
         this.setState({ colorInput: event.target.value });
     }
 
+    addColor() {
+        var { palette } = this.state
+        palette.colors.push({ name: '', colorCode: '#FFFFFF' })
+        this.setState({ palette })
+    }
+
+    setColorName(color: Color, name: string) {
+        color.name = name
+    }
+
+    saveColor(color: Color) {
+
+    }
+
     render() {
+        var { palette } = this.state;
         if (this.state.edit) {
             return (
-                <div>
-                    <div>
-                        <textarea value={this.state.colorInput} onChange={(e) => this.handleChange(e)}></textarea>
+                <div >
+                    <div className="colorPalette">
+                        {palette.colors.map(c => (
+                            <div className="colorItem">
+                                <div key={c.name} className="color" style={{ backgroundColor: c.colorCode }}>
+                                    {c.colorCode}
+                                </div>
+                                <div className="name">
+                                    {this.renderName(c)}
+                                </div>
+                            </div>
+                        ))}
+                        <div>
+                            {this.renderColorEditor()}
+
+                        </div>
                     </div>
+
                     <div>
                         <button onClick={() => this.saveColors(this.state.colorInput)}>save</button>
                     </div>
@@ -58,6 +91,22 @@ class PaletteEditor extends React.Component<Props, State> {
                 </div>
             )
         }
+    }
+
+    renderColorEditor() {
+        var { editColor } = this.state
+        if (editColor) {
+            return (
+                <ColorEditor saveColor = { this.saveColor } ></ColorEditor >
+            )
+        }
+    }
+
+    renderName(color: Color) {
+        let name = color.name || 'name'
+        return (
+            <input value={name} onChange={(e) => this.setColorName(color, e.target.value)} ></input>
+        )
     }
 }
 
