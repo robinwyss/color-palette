@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, NavLink, Route } from "react-router-dom"
 import { loadThemes, saveTheme } from "./lib/Storage"
 import Theme from './pages/Theme'
 import Overview from "./pages/Overview";
-import ThemeEditor from "./pages/ThemeEditor";
+import ThemeEditor from "./pages/editor";
 
 interface Props { }
 

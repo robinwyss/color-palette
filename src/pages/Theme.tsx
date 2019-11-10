@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom'
-import { loadTheme, saveTheme } from '../lib/Storage'
+import { loadTheme } from '../lib/Storage'
 import { ColorTheme } from '../lib/Types';
 import Palette from '../components/Palette'
 interface MatchParams {
