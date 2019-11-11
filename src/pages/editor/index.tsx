@@ -1,10 +1,16 @@
 import React from "react";
+import { RouteComponentProps } from "react-router";
 import PaletteEditor from "./components/PaletteEditor";
 import { ColorTheme } from "../../lib/Types";
 import "./index.css";
 import TextInput from "../../components/TextInput";
+import { saveTheme, loadTheme } from "../../lib/LocalStorage";
 
-interface Props {}
+interface MatchParams {
+  themeId: string;
+}
+
+interface Props extends RouteComponentProps<MatchParams> {}
 
 interface State {
   theme: ColorTheme;
@@ -14,10 +20,22 @@ interface State {
 class ThemeEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    let theme = this.getTheme(props);
     this.state = {
-      theme: { name: "", id: "", palettes: [] },
+      theme,
       editName: true
     };
+  }
+
+  getTheme(props: Props) {
+    if (props.match.params.themeId) {
+      var theme = loadTheme(props.match.params.themeId);
+    }
+    if (!theme) {
+      return { name: "", id: "", palettes: [] };
+    } else {
+      return theme;
+    }
   }
 
   updateName = (name: string) => {
@@ -34,7 +52,8 @@ class ThemeEditor extends React.Component<Props, State> {
 
   save = () => {
     var { theme } = this.state;
-    console.log(theme);
+    saveTheme(theme);
+    this.props.history.push("/theme/" + theme.id);
   };
 
   render() {

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { ColorTheme } from "./lib/Types";
 import { BrowserRouter, Switch, NavLink, Route } from "react-router-dom"
-import { loadThemes, saveTheme } from "./lib/Storage"
+import { loadThemes, saveTheme } from "./lib/LocalStorage"
 import Theme from './pages/Theme'
 import Overview from "./pages/Overview";
 import ThemeEditor from "./pages/editor";
@@ -40,18 +40,18 @@ class App extends React.Component<Props, State> {
         <div className="App">
           <div className="appContainer">
             <div className="box">
-              <ul>
+              {/* <ul>
                 {this.state.colorThemes.map(theme => (
                   <li><NavLink to={'/' + theme.name} >{theme.name}</NavLink></li>
                   // <Palette colors={colors}></Palette>
                 ))}
-              </ul>
+              </ul> */}
             </div>
             <div className="box">
               <Switch>
                 <Route exact path="/" component={Overview} />
                 <Route path="/theme/:themeId" component={Theme} />
-                <Route path="/editor" component={ThemeEditor} />
+                <Route path="/editor/:themeId?" component={ThemeEditor} />
               </Switch>
 
               {/* <PaletteEditor save={c => this.saveNewColors(c)}></PaletteEditor> */}
