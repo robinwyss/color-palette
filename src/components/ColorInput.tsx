@@ -1,9 +1,8 @@
 import React from "react";
-import "./TextInput.css";
 import TextInput from "./TextInput";
 import { colorValid } from "../lib/ColorUtils";
 import { SketchPicker } from "react-color";
-import "./ColorInput.css";
+import styles from "./ColorInput.module.css";
 
 interface Props {
   onChange(value: string): any;
@@ -42,7 +41,7 @@ class ColorInput extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className="colorInput">
+      <div className={styles.colorInput}>
         <TextInput
           value={this.state.color}
           onChange={this.updateColor}
@@ -53,8 +52,8 @@ class ColorInput extends React.Component<Props, State> {
           <span role="img">🎨</span>
         </button>
         {this.state.displayColorPicker ? (
-          <div className="colorPicker">
-            <div className="cover" onClick={this.toggleColorPicker} />
+          <div className={styles.colorPicker}>
+            <div className={styles.cover} onClick={this.toggleColorPicker} />
             <SketchPicker color={this.state.color} onChange={c => this.updateColor(c.hex)} />
           </div>
         ) : null}

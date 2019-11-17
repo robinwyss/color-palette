@@ -1,21 +1,21 @@
-import React from 'react';
-import './Palette.css';
-import { ColorPalette } from '../../../lib/Types'
+import React from "react";
+import styles from "./Palette.module.css";
+import { ColorPalette } from "../../../lib/Types";
 
 interface PaletteProps {
-    palette: ColorPalette
+  palette: ColorPalette;
 }
 
 const Palette: React.FC<PaletteProps> = ({ palette }) => {
-    return (
-        <div className="colorPalette">
-            {palette.colors.map(c => (
-                <div key={c.name} className="color" style={{ backgroundColor: c.colorCode }}>
-                    {c.colorCode} - {c.name}
-                </div>
-            ))}
+  return (
+    <div className={styles.colorPalette}>
+      {palette.colors.map(c => (
+        <div key={c.name} className={styles.color} style={{ backgroundColor: c.colorCode }}>
+          {c.colorCode} - {c.name}
         </div>
-    )
-}
+      ))}
+    </div>
+  );
+};
 
 export default Palette;

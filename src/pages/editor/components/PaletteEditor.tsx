@@ -1,5 +1,5 @@
 import React from "react";
-import "./PaletteEditor.css";
+import styles from "./PaletteEditor.module.css";
 import { ColorPalette, Color } from "../../../lib/Types";
 import ColorEditor from "./ColorEditor";
 import TextInput from "../../../components/TextInput";
@@ -40,17 +40,17 @@ class PaletteEditor extends React.Component<Props, State> {
     var { palette } = this.state;
     return (
       <div>
-        <div className="colorPaletteName">
+        <div>
           <TextInput value={palette.name} onChange={this.updateName} placeholder="Palette Name" />
         </div>
-        <div className="colorPalette">
+        <div className={styles.colorPalette}>
           {palette.colors.map((color, index) => (
-            <div key={index} className="colorItem">
+            <div key={index} className={styles.colorItem}>
               <ColorEditor color={color} key={color.colorCode}></ColorEditor>
             </div>
           ))}
-          <div className="addColor">
-            <button className="addBtn" onClick={this.addColor}>
+          <div className={styles.addColor}>
+            <button className={styles.addBtn} onClick={this.addColor}>
               Add Color
             </button>
           </div>
