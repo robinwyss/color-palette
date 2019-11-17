@@ -74,7 +74,7 @@ class ThemeEditor extends React.Component<Props, State> {
         </div>
         <div>
           <button onClick={this.save}>Save</button>
-          <NavLink to="/">
+          <NavLink to={"/theme/" + theme.id}>
             <button>Cancel</button>
           </NavLink>
         </div>

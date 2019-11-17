@@ -3,6 +3,7 @@ import { RouteComponentProps, NavLink } from "react-router-dom";
 import { loadTheme } from "../../lib/LocalStorage";
 import { ColorTheme } from "../../lib/Types";
 import Palette from "./components/Palette";
+import Exporter from "./components/Exporter";
 interface MatchParams {
   themeId: string;
 }
@@ -42,6 +43,7 @@ class Theme extends React.Component<Props, State> {
           </div>
         ))}
         <NavLink to={"/editor/" + theme.id}>Edit</NavLink>
+        {/* <Exporter theme={theme}></Exporter> */}
       </div>
     );
   }
