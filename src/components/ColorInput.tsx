@@ -49,7 +49,7 @@ class ColorInput extends React.Component<Props, State> {
           placeholder={this.props.placeholder}
           color={this.props.color}
         />
-        <button onClick={this.toggleColorPicker}>C</button>
+        <button onClick={this.toggleColorPicker}>🎨</button>
         {this.state.displayColorPicker ? <div className="colorPicker">
           <div className="cover" onClick={this.toggleColorPicker} />
           <SketchPicker color={this.state.color} onChange={(c) => this.updateColor(c.hex)} />
