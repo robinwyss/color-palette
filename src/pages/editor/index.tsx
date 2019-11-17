@@ -5,6 +5,7 @@ import { ColorTheme } from "../../lib/Types";
 import "./index.css";
 import TextInput from "../../components/TextInput";
 import { saveTheme, loadTheme } from "../../lib/LocalStorage";
+import { NavLink } from "react-router-dom";
 
 interface MatchParams {
   themeId: string;
@@ -73,6 +74,7 @@ class ThemeEditor extends React.Component<Props, State> {
         </div>
         <div>
           <button onClick={this.save}>Save</button>
+          <NavLink to="/"><button>Cancel</button></NavLink>
         </div>
       </div>
     );
