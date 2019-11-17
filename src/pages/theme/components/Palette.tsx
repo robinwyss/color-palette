@@ -1,6 +1,6 @@
 import React from 'react';
 import './Palette.css';
-import { ColorPalette } from '../lib/Types'
+import { ColorPalette } from '../../../lib/Types'
 
 interface PaletteProps {
     palette: ColorPalette

@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
 import { ColorTheme } from "./lib/Types";
-import { BrowserRouter, Switch, NavLink, Route } from "react-router-dom"
-import { loadThemes, saveTheme } from "./lib/LocalStorage"
-import Theme from './pages/Theme'
-import Overview from "./pages/Overview";
+import { BrowserRouter, Switch, Route } from "react-router-dom"
+import { loadThemes } from "./lib/LocalStorage"
+import Theme from './pages/theme'
+import Overview from "./pages/overview";
 import ThemeEditor from "./pages/editor";
 
 interface Props { }
@@ -27,26 +27,11 @@ class App extends React.Component<Props, State> {
     this.setState({ colorThemes });
   }
 
-  // saveNewColors(colors: string[]) {
-  //   let colorPalettes = [...this.state.colorThemes, colors];
-  //   this.setState({ colorPalettes });
-  //   localStorage.setItem("colorPalettes", JSON.stringify(colorPalettes));
-  // }
-
   render() {
-    // let colors = ["#1e2223", "#292f31", "#353d3e", "#414a4c"];
     return (
       <BrowserRouter>
         <div className="App">
           <div className="appContainer">
-            <div className="box">
-              {/* <ul>
-                {this.state.colorThemes.map(theme => (
-                  <li><NavLink to={'/' + theme.name} >{theme.name}</NavLink></li>
-                  // <Palette colors={colors}></Palette>
-                ))}
-              </ul> */}
-            </div>
             <div className="box">
               <Switch>
                 <Route exact path="/" component={Overview} />

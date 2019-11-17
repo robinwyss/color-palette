@@ -40,7 +40,7 @@ export function saveTheme(theme: ColorTheme) {
         if (themeIndex >= 0) {
             themes[themeIndex] = theme
         } else {
-            throw `No theme with id ${theme.id} found, saving failed`;
+            throw new Error(`No theme with id ${theme.id} found, saving failed`);
         }
     } else {
         theme.id = uuidv4()

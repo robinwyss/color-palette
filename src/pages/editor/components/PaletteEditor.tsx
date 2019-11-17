@@ -44,9 +44,9 @@ class PaletteEditor extends React.Component<Props, State> {
           <TextInput value={palette.name} onChange={this.updateName} placeholder="Palette Name" />
         </div>
         <div className="colorPalette">
-          {palette.colors.map(c => (
-            <div className="colorItem">
-              <ColorEditor color={c} key={c.colorCode}></ColorEditor>
+          {palette.colors.map((color, index) => (
+            <div key={index} className="colorItem">
+              <ColorEditor color={color} key={color.colorCode}></ColorEditor>
             </div>
           ))}
           <div className="addColor">

@@ -1,8 +1,8 @@
 import React from "react";
 import { RouteComponentProps, NavLink } from "react-router-dom";
-import { loadTheme } from "../lib/LocalStorage";
-import { ColorTheme } from "../lib/Types";
-import Palette from "../components/Palette";
+import { loadTheme } from "../../lib/LocalStorage";
+import { ColorTheme } from "../../lib/Types";
+import Palette from "./components/Palette";
 interface MatchParams {
   themeId: string;
 }
@@ -35,8 +35,8 @@ class Theme extends React.Component<Props, State> {
     return (
       <div>
         <h1>{theme.name}</h1>
-        {theme.palettes.map(palette => (
-          <div>
+        {theme.palettes.map((palette, index) => (
+          <div key={index}>
             <h2>{palette.name}</h2>
             <Palette palette={palette}></Palette>
           </div>

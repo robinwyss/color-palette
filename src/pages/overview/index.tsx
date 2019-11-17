@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { loadThemes } from "../lib/LocalStorage";
+import { loadThemes } from "../../lib/LocalStorage";
 
 class Overview extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class Overview extends React.Component {
       <div>
         <h1>Hello</h1>
         {themes.map(theme => (
-          <div>
+          <div key={theme.id}>
             <NavLink to={"/theme/" + theme.id}>{theme.name}</NavLink>
           </div>
         ))}
