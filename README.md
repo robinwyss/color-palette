@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/330b9e49-8068-4b18-a848-c4a74c4dcec7/deploy-status)](https://app.netlify.com/sites/angry-snyder-cbd14b/deploys)
+
 # Color-Palette
 Tool to create color paletts and download themm as images.
 
