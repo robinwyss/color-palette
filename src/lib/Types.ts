@@ -8,7 +8,7 @@ export type ColorPalette = {
     name: string
 }
 
-export type ColorTheme = {
+export type ColorScheme = {
     palettes: ColorPalette[];
     name: string;
     id: string;

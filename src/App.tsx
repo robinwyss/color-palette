@@ -1,16 +1,16 @@
 import React from "react";
 import styles from "./App.module.css";
-import { ColorTheme } from "./lib/Types";
+import { ColorScheme } from "./lib/Types";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { loadThemes } from "./lib/LocalStorage";
-import Theme from "./pages/theme";
+import { loadSchemes } from "./lib/LocalStorage";
+import Scheme from "./pages/scheme";
 import Overview from "./pages/overview";
-import ThemeEditor from "./pages/editor";
+import SchemeEditor from "./pages/editor";
 
 interface Props {}
 
 interface State {
-  colorThemes: ColorTheme[];
+  colorSchemes: ColorScheme[];
 }
 
 class App extends React.Component<Props, State> {
@@ -18,13 +18,13 @@ class App extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      colorThemes: []
+      colorSchemes: []
     };
   }
 
   componentDidMount() {
-    let colorThemes = loadThemes();
-    this.setState({ colorThemes });
+    let colorSchemes = loadSchemes();
+    this.setState({ colorSchemes });
   }
 
   render() {
@@ -35,8 +35,8 @@ class App extends React.Component<Props, State> {
             <div className={styles.box}>
               <Switch>
                 <Route exact path="/" component={Overview} />
-                <Route path="/theme/:themeId" component={Theme} />
-                <Route path="/editor/:themeId?" component={ThemeEditor} />
+                <Route path="/scheme/:schemeId" component={Scheme} />
+                <Route path="/editor/:schemeId?" component={SchemeEditor} />
               </Switch>
             </div>
           </div>

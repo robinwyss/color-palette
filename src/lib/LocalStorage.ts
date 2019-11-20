@@ -1,13 +1,13 @@
-import { ColorTheme } from './Types'
+import { ColorScheme } from './Types'
 import uuidv4 from 'uuid/v4'
 
-const name = "colorThemes";
-const version = "v1.0"
+const name = "colorSchemes";
+const version = "v1.1"
 
 type DataStructure = {
     version: string,
     timestamp: number,
-    themes: ColorTheme[]
+    schemes: ColorScheme[]
 }
 const timestamp = () => Date.now()
 
@@ -19,7 +19,7 @@ function loadData(): DataStructure {
         dataJson = JSON.stringify({
             timestamp: timestamp(),
             version,
-            themes: []
+            schemes: []
         })
         localStorage.setItem(name, dataJson)
     }
@@ -32,30 +32,30 @@ function saveData(data: DataStructure) {
     localStorage.setItem(name, dataJson);
 }
 
-export function saveTheme(theme: ColorTheme) {
+export function saveScheme(scheme: ColorScheme) {
     var data = loadData();
-    var themes = data.themes;
-    if (theme.id) {
-        var themeIndex = themes.findIndex(t => t.id === theme.id)
-        if (themeIndex >= 0) {
-            themes[themeIndex] = theme
+    var schemes = data.schemes;
+    if (scheme.id) {
+        var schemeIndex = schemes.findIndex(t => t.id === scheme.id)
+        if (schemeIndex >= 0) {
+            schemes[schemeIndex] = scheme
         } else {
-            throw new Error(`No theme with id ${theme.id} found, saving failed`);
+            throw new Error(`No scheme with id ${scheme.id} found, saving failed`);
         }
     } else {
-        theme.id = uuidv4()
-        themes.push(theme);
+        scheme.id = uuidv4()
+        schemes.push(scheme);
     }
-    data.themes = themes;
+    data.schemes = schemes;
     saveData(data);
 }
 
-export function loadThemes(): ColorTheme[] {
+export function loadSchemes(): ColorScheme[] {
     var data = loadData()
-    return data.themes;
+    return data.schemes;
 }
 
-export function loadTheme(themeId: string): ColorTheme | undefined {
-    let themes = loadThemes()
-    return themes.find(theme => theme.id === themeId)
+export function loadScheme(schemeId: string): ColorScheme | undefined {
+    let scheme = loadSchemes()
+    return scheme.find(scheme => scheme.id === schemeId)
 }

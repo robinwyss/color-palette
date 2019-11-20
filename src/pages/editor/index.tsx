@@ -1,70 +1,70 @@
 import React from "react";
 import { RouteComponentProps } from "react-router";
 import PaletteEditor from "./components/PaletteEditor";
-import { ColorTheme } from "../../lib/Types";
+import { ColorScheme } from "../../lib/Types";
 import styles from "./index.module.css";
 import TextInput from "../../components/TextInput";
-import { saveTheme, loadTheme } from "../../lib/LocalStorage";
+import { saveScheme, loadScheme } from "../../lib/LocalStorage";
 import { NavLink } from "react-router-dom";
 
 interface MatchParams {
-  themeId: string;
+  schemeId: string;
 }
 
 interface Props extends RouteComponentProps<MatchParams> {}
 
 interface State {
-  theme: ColorTheme;
+  scheme: ColorScheme;
   editName: boolean;
 }
 
-class ThemeEditor extends React.Component<Props, State> {
+class SchemeEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    let theme = this.getTheme(props);
+    let scheme = this.getScheme(props);
     this.state = {
-      theme,
+      scheme,
       editName: true
     };
   }
 
-  getTheme(props: Props) {
-    if (props.match.params.themeId) {
-      var theme = loadTheme(props.match.params.themeId);
+  getScheme(props: Props) {
+    if (props.match.params.schemeId) {
+      var scheme = loadScheme(props.match.params.schemeId);
     }
-    if (!theme) {
+    if (!scheme) {
       return { name: "", id: "", palettes: [] };
     } else {
-      return theme;
+      return scheme;
     }
   }
 
   updateName = (name: string) => {
-    var { theme } = this.state;
-    theme.name = name;
-    this.setState({ theme });
+    var { scheme } = this.state;
+    scheme.name = name;
+    this.setState({ scheme });
   };
 
   addPalette = () => {
-    var { theme } = this.state;
-    theme.palettes.push({ colors: [], name: "" });
-    this.setState({ theme });
+    var { scheme } = this.state;
+    scheme.palettes.push({ colors: [], name: "" });
+    this.setState({ scheme });
   };
 
   save = () => {
-    var { theme } = this.state;
-    saveTheme(theme);
-    this.props.history.push("/theme/" + theme.id);
+    var { scheme } = this.state;
+    saveScheme(scheme);
+    this.props.history.push("/scheme/" + scheme.id);
   };
 
   render() {
-    var { theme } = this.state;
+    var { scheme } = this.state;
     return (
       <div>
-        <div className={styles.themeTitle}>
-          <TextInput value={theme.name} onChange={this.updateName} placeholder="Theme Name"></TextInput>
+        <div className={styles.schemeTitle}>
+          <TextInput value={scheme.name} onChange={this.updateName} placeholder="Scheme Name"></TextInput>
         </div>
-        {theme.palettes.map(palette => (
+        {scheme.palettes.map(palette => (
           <PaletteEditor palette={palette} key={palette.name}></PaletteEditor>
         ))}
         <div>
@@ -74,7 +74,7 @@ class ThemeEditor extends React.Component<Props, State> {
         </div>
         <div>
           <button onClick={this.save}>Save</button>
-          <NavLink to={"/theme/" + theme.id}>
+          <NavLink to={"/scheme/" + scheme.id}>
             <button>Cancel</button>
           </NavLink>
         </div>
@@ -83,4 +83,4 @@ class ThemeEditor extends React.Component<Props, State> {
   }
 }
 
-export default ThemeEditor;
+export default SchemeEditor;

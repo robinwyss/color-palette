@@ -1,19 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { loadThemes } from "../../lib/LocalStorage";
+import { loadSchemes } from "../../lib/LocalStorage";
 
 class Overview extends React.Component {
   render() {
-    var themes = loadThemes();
+    var schemes = loadSchemes();
     return (
       <div>
         <h1>Hello</h1>
-        {themes.map(theme => (
-          <div key={theme.id}>
-            <NavLink to={"/theme/" + theme.id}>{theme.name}</NavLink>
+        {schemes.map(scheme => (
+          <div key={scheme.id}>
+            <NavLink to={"/scheme/" + scheme.id}>{scheme.name}</NavLink>
           </div>
         ))}
-        <NavLink to="/editor">Create Theme</NavLink>
+        <NavLink to="/editor">Create Scheme</NavLink>
       </div>
     );
   }

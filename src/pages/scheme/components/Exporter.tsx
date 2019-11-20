@@ -1,34 +1,34 @@
 import React from "react";
-import { ColorTheme } from "../../../lib/Types";
+import { ColorScheme } from "../../../lib/Types";
 import ReactDOMServer from "react-dom/server";
 
 type size = { width: number; height: number };
 
 interface Props {
-  theme: ColorTheme;
+  scheme: ColorScheme;
 }
 
-const Exporter: React.SFC<Props> = ({ theme }) => {
+const Exporter: React.SFC<Props> = ({ scheme }) => {
   return (
     <div>
-      <button onClick={() => downloadThemeAsPng(theme)}>download png</button>
-      <button onClick={() => downloadThemeAsSvg(theme)}>download svg</button>
+      <button onClick={() => downloadSchemeAsPng(scheme)}>download png</button>
+      <button onClick={() => downloadSchemeAsSvg(scheme)}>download svg</button>
     </div>
   );
 };
 
-const downloadThemeAsPng = (theme: ColorTheme) => {
-  var size = calculateRequiredSize(theme);
-  var themeSvg = createSvg(theme, size);
-  exportSvgAsImage(themeSvg, size, `${theme.name}.png`);
+const downloadSchemeAsPng = (scheme: ColorScheme) => {
+  var size = calculateRequiredSize(scheme);
+  var schemeSvg = createSvg(scheme, size);
+  exportSvgAsImage(schemeSvg, size, `${scheme.name}.png`);
 };
 
-const downloadThemeAsSvg = (theme: ColorTheme) => {
-  var size = calculateRequiredSize(theme);
-  var themeSvg = createSvg(theme, size);
+const downloadSchemeAsSvg = (scheme: ColorScheme) => {
+  var size = calculateRequiredSize(scheme);
+  var schemeSvg = createSvg(scheme, size);
 
-  var svgDataUri = "data:image/svg+xml;base64," + btoa(themeSvg);
-  download(`${theme.name}.svg`, svgDataUri);
+  var svgDataUri = "data:image/svg+xml;base64," + btoa(schemeSvg);
+  download(`${scheme.name}.svg`, svgDataUri);
 };
 
 const download = (filename: string, dataUri: string) => {
@@ -45,7 +45,7 @@ const download = (filename: string, dataUri: string) => {
   }
 };
 
-const createSvg = (theme: ColorTheme, size: size) => {
+const createSvg = (scheme: ColorScheme, size: size) => {
   var svg = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -56,9 +56,9 @@ const createSvg = (theme: ColorTheme, size: size) => {
     >
       <rect width="100%" height="100%" fill="#FFFFFF" />
       <text x="10" y="20">
-        {theme.name}
+        {scheme.name}
       </text>
-      {theme.palettes.map((palette, index) => (
+      {scheme.palettes.map((palette, index) => (
         <g transform={"translate(10," + (index * 160 + 50) + ")"} key={index}>
           <text>{palette.name}</text>
           {palette.colors.map((color, index) => (
@@ -80,11 +80,11 @@ const createSvg = (theme: ColorTheme, size: size) => {
   return ReactDOMServer.renderToString(svg);
 };
 
-const calculateRequiredSize = (theme: ColorTheme): size => {
-  var maxWidth = theme.palettes
+const calculateRequiredSize = (scheme: ColorScheme): size => {
+  var maxWidth = scheme.palettes
     .map(p => p.colors.length * 100)
     .reduce((previousWidth, width) => (width > previousWidth ? width : previousWidth));
-  var height = theme.palettes.length * 160;
+  var height = scheme.palettes.length * 160;
   return { width: maxWidth + 20, height: height + 60 };
 };
 
