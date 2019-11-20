@@ -2,7 +2,7 @@ import React from "react";
 import { RouteComponentProps } from "react-router";
 import PaletteEditor from "./components/PaletteEditor";
 import { ColorTheme } from "../../lib/Types";
-import "./index.css";
+import styles from "./index.module.css";
 import TextInput from "../../components/TextInput";
 import { saveTheme, loadTheme } from "../../lib/LocalStorage";
 import { NavLink } from "react-router-dom";
@@ -61,20 +61,22 @@ class ThemeEditor extends React.Component<Props, State> {
     var { theme } = this.state;
     return (
       <div>
-        <div className="themeTitle">
+        <div className={styles.themeTitle}>
           <TextInput value={theme.name} onChange={this.updateName} placeholder="Theme Name"></TextInput>
         </div>
         {theme.palettes.map(palette => (
           <PaletteEditor palette={palette} key={palette.name}></PaletteEditor>
         ))}
         <div>
-          <button className="addBtn" onClick={this.addPalette}>
+          <button className={styles.addBtn} onClick={this.addPalette}>
             Add Palette
           </button>
         </div>
         <div>
           <button onClick={this.save}>Save</button>
-          <NavLink to="/"><button>Cancel</button></NavLink>
+          <NavLink to={"/theme/" + theme.id}>
+            <button>Cancel</button>
+          </NavLink>
         </div>
       </div>
     );

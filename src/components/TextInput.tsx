@@ -1,5 +1,5 @@
 import React from "react";
-import "./TextInput.css";
+import styles from "./TextInput.module.css";
 
 interface Props {
   onChange(value: string): any;
@@ -15,7 +15,7 @@ const TextInput: React.SFC<Props> = (props: Props) => {
       type="text"
       style={{ color }}
       value={props.value}
-      className="defaultInput"
+      className={styles.defaultInput}
       onChange={e => props.onChange(e.target.value)}
       placeholder={props.placeholder}
     />

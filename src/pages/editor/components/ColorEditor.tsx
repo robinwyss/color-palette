@@ -1,6 +1,6 @@
 import React from "react";
 import { Color } from "../../../lib/Types";
-import "./ColorEditor.css";
+import styles from "./ColorEditor.module.css";
 import TextInput from "../../../components/TextInput";
 import { getContrast } from "../../../lib/ColorUtils";
 import ColorInput from "../../../components/ColorInput";
@@ -35,7 +35,7 @@ class ColorEditor extends React.Component<Props, State> {
     var textColor = getContrast(colorCode);
     return (
       <div>
-        <div className="colorEditor" style={{ backgroundColor: colorCode }}>
+        <div className={styles.colorEditor} style={{ backgroundColor: colorCode }}>
           <ColorInput
             color={textColor}
             value={colorCode}

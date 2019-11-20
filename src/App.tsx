@@ -1,13 +1,13 @@
 import React from "react";
-import "./App.css";
+import styles from "./App.module.css";
 import { ColorTheme } from "./lib/Types";
-import { BrowserRouter, Switch, NavLink, Route } from "react-router-dom"
-import { loadThemes, saveTheme } from "./lib/LocalStorage"
-import Theme from './pages/Theme'
-import Overview from "./pages/Overview";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { loadThemes } from "./lib/LocalStorage";
+import Theme from "./pages/theme";
+import Overview from "./pages/overview";
 import ThemeEditor from "./pages/editor";
 
-interface Props { }
+interface Props {}
 
 interface State {
   colorThemes: ColorTheme[];
@@ -23,38 +23,21 @@ class App extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    let colorThemes = loadThemes()
+    let colorThemes = loadThemes();
     this.setState({ colorThemes });
   }
 
-  // saveNewColors(colors: string[]) {
-  //   let colorPalettes = [...this.state.colorThemes, colors];
-  //   this.setState({ colorPalettes });
-  //   localStorage.setItem("colorPalettes", JSON.stringify(colorPalettes));
-  // }
-
   render() {
-    // let colors = ["#1e2223", "#292f31", "#353d3e", "#414a4c"];
     return (
       <BrowserRouter>
-        <div className="App">
-          <div className="appContainer">
-            <div className="box">
-              {/* <ul>
-                {this.state.colorThemes.map(theme => (
-                  <li><NavLink to={'/' + theme.name} >{theme.name}</NavLink></li>
-                  // <Palette colors={colors}></Palette>
-                ))}
-              </ul> */}
-            </div>
-            <div className="box">
+        <div>
+          <div className={styles.appContainer}>
+            <div className={styles.box}>
               <Switch>
                 <Route exact path="/" component={Overview} />
                 <Route path="/theme/:themeId" component={Theme} />
                 <Route path="/editor/:themeId?" component={ThemeEditor} />
               </Switch>
-
-              {/* <PaletteEditor save={c => this.saveNewColors(c)}></PaletteEditor> */}
             </div>
           </div>
         </div>

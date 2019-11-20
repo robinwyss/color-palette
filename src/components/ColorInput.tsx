@@ -1,9 +1,8 @@
 import React from "react";
-import "./TextInput.css";
 import TextInput from "./TextInput";
 import { colorValid } from "../lib/ColorUtils";
-import { SketchPicker } from "react-color"
-import './ColorInput.css'
+import { SketchPicker } from "react-color";
+import styles from "./ColorInput.module.css";
 
 interface Props {
   onChange(value: string): any;
@@ -37,23 +36,27 @@ class ColorInput extends React.Component<Props, State> {
   };
 
   toggleColorPicker = () => {
-    this.setState({ displayColorPicker: !this.state.displayColorPicker })
-  }
+    this.setState({ displayColorPicker: !this.state.displayColorPicker });
+  };
 
   render() {
     return (
-      <div className="colorInput">
+      <div className={styles.colorInput}>
         <TextInput
           value={this.state.color}
           onChange={this.updateColor}
           placeholder={this.props.placeholder}
           color={this.props.color}
         />
-        <button onClick={this.toggleColorPicker}>🎨</button>
-        {this.state.displayColorPicker ? <div className="colorPicker">
-          <div className="cover" onClick={this.toggleColorPicker} />
-          <SketchPicker color={this.state.color} onChange={(c) => this.updateColor(c.hex)} />
-        </div> : null}
+        <button onClick={this.toggleColorPicker}>
+          <span role="img">🎨</span>
+        </button>
+        {this.state.displayColorPicker ? (
+          <div className={styles.colorPicker}>
+            <div className={styles.cover} onClick={this.toggleColorPicker} />
+            <SketchPicker color={this.state.color} onChange={c => this.updateColor(c.hex)} />
+          </div>
+        ) : null}
       </div>
     );
   }
