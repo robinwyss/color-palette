@@ -43,7 +43,7 @@ class Theme extends React.Component<Props, State> {
           </div>
         ))}
         <NavLink to={"/editor/" + theme.id}>Edit</NavLink>
-        {/* <Exporter theme={theme}></Exporter> */}
+        <Exporter theme={theme}></Exporter>
       </div>
     );
   }
