@@ -6,29 +6,19 @@ import { loadSchemes } from "./lib/LocalStorage";
 import Scheme from "./pages/scheme";
 import Overview from "./pages/overview";
 import SchemeEditor from "./pages/editor";
+import NavBar from "./components/NavBar";
+import { useAuth0 } from "./lib/react-auth0";
 
-interface Props {}
+const App: React.SFC = () => {
+  const { loading } = useAuth0();
 
-interface State {
-  colorSchemes: ColorScheme[];
-}
-
-class App extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      colorSchemes: []
-    };
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  componentDidMount() {
-    let colorSchemes = loadSchemes();
-    this.setState({ colorSchemes });
-  }
-
-  render() {
-    return (
+  return (
+    <div>
+      <NavBar></NavBar>
       <BrowserRouter>
         <div>
           <div className={styles.appContainer}>
@@ -42,8 +32,8 @@ class App extends React.Component<Props, State> {
           </div>
         </div>
       </BrowserRouter>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default App;
