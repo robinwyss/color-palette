@@ -43,12 +43,14 @@ class PaletteEditor extends React.Component<Props, State> {
         <div>
           <TextInput value={palette.name} onChange={this.updateName} placeholder="Palette Name" />
         </div>
-        <div className={styles.colorPalette}>
-          {palette.colors.map((color, index) => (
-            <div key={index} className={styles.colorItem}>
-              <ColorEditor color={color} key={color.colorCode}></ColorEditor>
-            </div>
-          ))}
+        <div className={styles.paletteEditor}>
+          <div className={styles.colorPalette}>
+            {palette.colors.map((color, index) => (
+              <div key={index} className={styles.colorItem}>
+                <ColorEditor color={color} key={color.colorCode}></ColorEditor>
+              </div>
+            ))}
+          </div>
           <div className={styles.addColor}>
             <button className={styles.addBtn} onClick={this.addColor}>
               Add Color
