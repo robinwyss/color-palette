@@ -11,7 +11,7 @@ interface MatchParams {
   schemeId: string;
 }
 
-interface Props extends RouteComponentProps<MatchParams> {}
+interface Props extends RouteComponentProps<MatchParams> { }
 
 interface State {
   scheme: ColorScheme;
@@ -57,6 +57,12 @@ class SchemeEditor extends React.Component<Props, State> {
     this.props.history.push("/scheme/" + scheme.id);
   };
 
+  deletePalette = (index: number) => {
+    var { scheme } = this.state;
+    scheme.palettes.splice(index, 1);
+    this.setState({ scheme });
+  }
+
   render() {
     var { scheme } = this.state;
     return (
@@ -64,8 +70,11 @@ class SchemeEditor extends React.Component<Props, State> {
         <div className={styles.schemeTitle}>
           <TextInput value={scheme.name} onChange={this.updateName} placeholder="Scheme Name"></TextInput>
         </div>
-        {scheme.palettes.map(palette => (
-          <PaletteEditor palette={palette} key={palette.name}></PaletteEditor>
+        {scheme.palettes.map((palette, index) => (
+          <div>
+            <PaletteEditor palette={palette} key={index}></PaletteEditor>
+            <button onClick={() => this.deletePalette(index)}>delete</button>
+          </div>
         ))}
         <div>
           <button className={styles.addBtn} onClick={this.addPalette}>
