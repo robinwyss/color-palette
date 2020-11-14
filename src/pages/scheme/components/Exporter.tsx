@@ -59,7 +59,7 @@ const createSvg = (scheme: ColorScheme, size: size) => {
         {scheme.name}
       </text>
       {scheme.palettes.map((palette, index) => (
-        <g transform={"translate(10," + (index * 160 + 50) + ")"} key={index}>
+        <g transform={"translate(10," + (index * 180 + 50) + ")"} key={index}>
           <text>{palette.name}</text>
           {palette.colors.map((color, index) => (
             <g transform={"translate(" + index * 100 + ",10)"} key={index}>
