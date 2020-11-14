@@ -49,7 +49,7 @@ class ColorInput extends React.Component<Props, State> {
           color={this.props.color}
         />
         <button onClick={this.toggleColorPicker}>
-          <span role="img">🎨</span>
+          <span role="img" aria-label="choose color">🎨</span>
         </button>
         {this.state.displayColorPicker ? (
           <div className={styles.colorPicker}>

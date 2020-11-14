@@ -1,6 +1,4 @@
 import { ColorScheme } from './Types'
-import uuidv4 from 'uuid/v4'
-import Scheme from '../pages/scheme';
 
 const name = "colorSchemes";
 const version = "v1.1"

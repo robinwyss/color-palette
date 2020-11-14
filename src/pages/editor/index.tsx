@@ -1,12 +1,11 @@
 import React from "react";
 import { RouteComponentProps } from "react-router";
 import PaletteEditor from "./components/PaletteEditor";
-import { ColorScheme, ColorPalette, Color } from "../../lib/Types";
+import { ColorScheme, ColorPalette } from "../../lib/Types";
 import styles from "./index.module.css";
 import TextInput from "../../components/TextInput";
 import { saveScheme, loadScheme, deleteScheme } from "../../lib/LocalStorage";
 import { NavLink } from "react-router-dom";
-import Scheme from "../scheme";
 
 interface MatchParams {
   schemeId: string;
