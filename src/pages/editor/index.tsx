@@ -1,17 +1,18 @@
 import React from "react";
 import { RouteComponentProps } from "react-router";
 import PaletteEditor from "./components/PaletteEditor";
-import { ColorScheme } from "../../lib/Types";
+import { ColorScheme, ColorPalette, Color } from "../../lib/Types";
 import styles from "./index.module.css";
 import TextInput from "../../components/TextInput";
-import { saveScheme, loadScheme } from "../../lib/LocalStorage";
+import { saveScheme, loadScheme, deleteScheme } from "../../lib/LocalStorage";
 import { NavLink } from "react-router-dom";
+import Scheme from "../scheme";
 
 interface MatchParams {
   schemeId: string;
 }
 
-interface Props extends RouteComponentProps<MatchParams> {}
+interface Props extends RouteComponentProps<MatchParams> { }
 
 interface State {
   scheme: ColorScheme;
@@ -33,7 +34,7 @@ class SchemeEditor extends React.Component<Props, State> {
       var scheme = loadScheme(props.match.params.schemeId);
     }
     if (!scheme) {
-      return { name: "", id: "", palettes: [] };
+      return new ColorScheme();
     } else {
       return scheme;
     }
@@ -47,7 +48,7 @@ class SchemeEditor extends React.Component<Props, State> {
 
   addPalette = () => {
     var { scheme } = this.state;
-    scheme.palettes.push({ colors: [], name: "" });
+    scheme.palettes.push(new ColorPalette());
     this.setState({ scheme });
   };
 
@@ -57,6 +58,21 @@ class SchemeEditor extends React.Component<Props, State> {
     this.props.history.push("/scheme/" + scheme.id);
   };
 
+  delete = () => {
+    var { scheme } = this.state;
+    deleteScheme(scheme);
+    this.props.history.push("/");
+  }
+
+  deletePalette = (paletteId: string) => {
+    var { scheme } = this.state;
+    let index = scheme.palettes.findIndex(p => p.id === paletteId);
+    if (index >= 0) {
+      scheme.palettes.splice(index, 1);
+    }
+    this.setState({ scheme });
+  }
+
   render() {
     var { scheme } = this.state;
     return (
@@ -65,7 +81,10 @@ class SchemeEditor extends React.Component<Props, State> {
           <TextInput value={scheme.name} onChange={this.updateName} placeholder="Scheme Name"></TextInput>
         </div>
         {scheme.palettes.map(palette => (
-          <PaletteEditor palette={palette} key={palette.name}></PaletteEditor>
+          <div key={palette.id}>
+            <PaletteEditor palette={palette}></PaletteEditor>
+            <button onClick={() => this.deletePalette(palette.id)}>Delete</button>
+          </div>
         ))}
         <div>
           <button className={styles.addBtn} onClick={this.addPalette}>
@@ -77,6 +96,7 @@ class SchemeEditor extends React.Component<Props, State> {
           <NavLink to={"/scheme/" + scheme.id}>
             <button>Cancel</button>
           </NavLink>
+          <button onClick={this.delete}>Delete</button>
         </div>
       </div>
     );

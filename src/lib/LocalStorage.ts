@@ -1,5 +1,6 @@
 import { ColorScheme } from './Types'
 import uuidv4 from 'uuid/v4'
+import Scheme from '../pages/scheme';
 
 const name = "colorSchemes";
 const version = "v1.1"
@@ -9,6 +10,7 @@ type DataStructure = {
     timestamp: number,
     schemes: ColorScheme[]
 }
+
 const timestamp = () => Date.now()
 
 
@@ -35,19 +37,23 @@ function saveData(data: DataStructure) {
 export function saveScheme(scheme: ColorScheme) {
     var data = loadData();
     var schemes = data.schemes;
-    if (scheme.id) {
-        var schemeIndex = schemes.findIndex(t => t.id === scheme.id)
-        if (schemeIndex >= 0) {
-            schemes[schemeIndex] = scheme
-        } else {
-            throw new Error(`No scheme with id ${scheme.id} found, saving failed`);
-        }
+    var schemeIndex = schemes.findIndex(t => t.id === scheme.id)
+    if (schemeIndex >= 0) {
+        schemes[schemeIndex] = scheme
     } else {
-        scheme.id = uuidv4()
         schemes.push(scheme);
     }
     data.schemes = schemes;
     saveData(data);
+}
+
+export function deleteScheme(scheme: ColorScheme) {
+    var data = loadData();
+    var schemes = data.schemes;
+    var schemeIndex = schemes.findIndex(t => t.id === scheme.id)
+    if (schemeIndex >= 0) {
+        delete schemes[schemeIndex];
+    }
 }
 
 export function loadSchemes(): ColorScheme[] {

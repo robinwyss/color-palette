@@ -97,7 +97,7 @@ const exportSvgAsImage = (svgXml: string, size: size, name: string) => {
   var svgBlob = new Blob([svgXml], { type: "image/svg+xml;charset=utf-8" });
   var DOMURL = window.URL || window.webkitURL || window;
   var url = DOMURL.createObjectURL(svgBlob);
-  img.onload = function() {
+  img.onload = function () {
     if (ctx) {
       ctx.drawImage(img, 0, 0);
       DOMURL.revokeObjectURL(url);

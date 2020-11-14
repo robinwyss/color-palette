@@ -16,13 +16,13 @@ class PaletteEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      palette: props.palette || { name: "", colors: [{ colorCode: "#FFFFFF" }] }
-    };
+      palette: props.palette || new ColorPalette()
+    }
   }
 
   addColor = () => {
     var { palette } = this.state;
-    palette.colors.push({ name: "", colorCode: "#FFFFFF" });
+    palette.colors.push(new Color())
     this.setState({ palette });
   };
 
@@ -36,6 +36,15 @@ class PaletteEditor extends React.Component<Props, State> {
     this.setState({ palette });
   };
 
+  deleteColor = (colorId: string) => {
+    const { palette } = this.state;
+    const index = palette.colors.findIndex(c => c.id === colorId);
+    if (index >= 0) {
+      palette.colors.splice(index, 1);
+    }
+    this.setState({ palette });
+  }
+
   render() {
     var { palette } = this.state;
     return (
@@ -45,9 +54,10 @@ class PaletteEditor extends React.Component<Props, State> {
         </div>
         <div className={styles.paletteEditor}>
           <div className={styles.colorPalette}>
-            {palette.colors.map((color, index) => (
-              <div key={index} className={styles.colorItem}>
-                <ColorEditor color={color} key={color.colorCode}></ColorEditor>
+            {palette.colors.map(color => (
+              <div key={color.id} className={styles.colorItem}>
+                <ColorEditor color={color}></ColorEditor>
+                <button onClick={() => this.deleteColor(color.id)}>Delete</button>
               </div>
             ))}
           </div>

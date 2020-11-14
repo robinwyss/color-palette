@@ -8,7 +8,7 @@ interface MatchParams {
   schemeId: string;
 }
 
-interface Props extends RouteComponentProps<MatchParams> {}
+interface Props extends RouteComponentProps<MatchParams> { }
 
 interface State {
   scheme: ColorScheme | undefined;
@@ -36,7 +36,7 @@ class Scheme extends React.Component<Props, State> {
     return (
       <div>
         <h1>{scheme.name}</h1>
-        {scheme.palettes.map((palette, index) => (
+        { scheme.palettes.map((palette, index) => (
           <div key={index}>
             <h2>{palette.name}</h2>
             <Palette palette={palette}></Palette>
