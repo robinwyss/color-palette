@@ -86,6 +86,13 @@ class SchemeEditor extends React.Component<Props, State> {
     }
   }
 
+  swapItemWithNext = (index: number) => {
+    const { scheme } = this.state;
+    var item = scheme.palettes.splice(index, 1)[0];
+    scheme.palettes.splice(index + 1, 0, item);
+    this.setState({ scheme });
+  }
+
   render() {
     var { scheme } = this.state;
     return (
@@ -93,10 +100,11 @@ class SchemeEditor extends React.Component<Props, State> {
         <div className={styles.schemeTitle}>
           <TextInput value={scheme.name} onChange={this.updateName} placeholder="Scheme Name"></TextInput>
         </div>
-        {scheme.palettes.map(palette => (
+        {scheme.palettes.map((palette, index) => (
           <div key={palette.id}>
             <PaletteEditor notifyChange={this.save} palette={palette}></PaletteEditor>
             <button onClick={() => this.deletePalette(palette.id)}>Delete</button>
+            {index < (scheme.palettes.length - 1) && (<button onClick={() => this.swapItemWithNext(index)}>SWAP</button>)}
           </div>
         ))}
         <div>

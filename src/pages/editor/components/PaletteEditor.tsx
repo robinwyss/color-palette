@@ -45,6 +45,13 @@ class PaletteEditor extends React.Component<Props, State> {
     this.setState({ palette });
   }
 
+  swapItemWithNext = (index: number) => {
+    const { palette } = this.state;
+    var item = palette.colors.splice(index, 1)[0];
+    palette.colors.splice(index + 1, 0, item);
+    this.setState({ palette });
+  }
+  
   render() {
     var { palette } = this.state;
     return (
@@ -54,10 +61,11 @@ class PaletteEditor extends React.Component<Props, State> {
         </div>
         <div className={styles.paletteEditor}>
           <div className={styles.colorPalette}>
-            {palette.colors.map(color => (
+            {palette.colors.map((color, index) => (
               <div key={color.id} className={styles.colorItem}>
                 <ColorEditor notifyChange={this.props.notifyChange} color={color}></ColorEditor>
                 <button onClick={() => this.deleteColor(color.id)}>Delete</button>
+                {index < (palette.colors.length - 1) && (<button onClick={() => this.swapItemWithNext(index)}>SWAP</button>)}
               </div>
             ))}
           </div>
