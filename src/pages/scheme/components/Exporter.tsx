@@ -1,21 +1,28 @@
 import React from "react";
 import { ColorScheme } from "../../../lib/Types";
-import ReactDOMServer from "react-dom/server";
-
-type size = { width: number; height: number };
+import { calculateRequiredSize, createSvg, Size } from "../../../lib/Export/ImageExport";
+import { getJsonDataUri } from "../../../lib/Export/JsonExporter";
 
 interface Props {
   scheme: ColorScheme;
 }
 
-const Exporter: React.SFC<Props> = ({ scheme }) => {
+const Exporter: React.FunctionComponent<Props> = ({ scheme }) => {
+
+
   return (
     <div>
       <button onClick={() => downloadSchemeAsPng(scheme)}>download png</button>
       <button onClick={() => downloadSchemeAsSvg(scheme)}>download svg</button>
+      <button onClick={() => downloadSchemeToJson(scheme)}>export to JSON</button>
     </div>
   );
 };
+
+const downloadSchemeToJson = (scheme: ColorScheme) => {
+  const schemeJson = getJsonDataUri(scheme);
+  download(`${scheme.name}.json`, schemeJson);
+}
 
 const downloadSchemeAsPng = (scheme: ColorScheme) => {
   var size = calculateRequiredSize(scheme);
@@ -45,50 +52,7 @@ const download = (filename: string, dataUri: string) => {
   }
 };
 
-const createSvg = (scheme: ColorScheme, size: size) => {
-  var svg = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={size.width}
-      height={size.height}
-      version="1.1"
-      fontFamily="Arial, Helvetica, sans-serif"
-    >
-      <rect width="100%" height="100%" fill="#FFFFFF" />
-      <text x="10" y="20">
-        {scheme.name}
-      </text>
-      {scheme.palettes.map((palette, index) => (
-        <g transform={"translate(10," + (index * 180 + 50) + ")"} key={index}>
-          <text>{palette.name}</text>
-          {palette.colors.map((color, index) => (
-            <g transform={"translate(" + index * 100 + ",10)"} key={index}>
-              <rect fill={color.colorCode} stroke="#000000" width="100" height="100"></rect>
-              <text x="5" y="120" width="100">
-                {color.colorCode}
-              </text>
-              <text x="5" y="140" width="100">
-                {color.name}
-              </text>
-            </g>
-          ))}
-        </g>
-      ))}
-    </svg>
-  );
-
-  return ReactDOMServer.renderToString(svg);
-};
-
-const calculateRequiredSize = (scheme: ColorScheme): size => {
-  var maxWidth = scheme.palettes
-    .map(p => p.colors.length * 100)
-    .reduce((previousWidth, width) => (width > previousWidth ? width : previousWidth));
-  var height = scheme.palettes.length * 160;
-  return { width: maxWidth + 20, height: height + 60 };
-};
-
-const exportSvgAsImage = (svgXml: string, size: size, name: string) => {
+const exportSvgAsImage = (svgXml: string, size: Size, name: string) => {
   var canvas = document.createElement("canvas");
   canvas.width = size.width;
   canvas.height = size.height;
