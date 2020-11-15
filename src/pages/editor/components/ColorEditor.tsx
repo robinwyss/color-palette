@@ -7,6 +7,7 @@ import ColorInput from "../../../components/ColorInput";
 
 interface Props {
   color: Color;
+  notifyChange: () => void
 }
 
 interface State {
@@ -22,11 +23,13 @@ class ColorEditor extends React.Component<Props, State> {
 
   updateName = (name: string) => {
     this.props.color.name = name;
+    this.props.notifyChange();
     this.setState({ name });
   };
 
   updateColor = (colorCode: string) => {
     this.props.color.colorCode = colorCode;
+    this.props.notifyChange();
     this.setState({ colorCode });
   };
 

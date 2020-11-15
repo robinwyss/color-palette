@@ -50,8 +50,9 @@ export function deleteScheme(scheme: ColorScheme) {
     var schemes = data.schemes;
     var schemeIndex = schemes.findIndex(t => t.id === scheme.id)
     if (schemeIndex >= 0) {
-        delete schemes[schemeIndex];
+        schemes.splice(schemeIndex,1);
     }
+    saveData(data);
 }
 
 export function loadSchemes(): ColorScheme[] {

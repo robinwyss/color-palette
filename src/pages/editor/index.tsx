@@ -5,7 +5,6 @@ import { ColorScheme, ColorPalette } from "../../lib/Types";
 import styles from "./index.module.css";
 import TextInput from "../../components/TextInput";
 import { saveScheme, loadScheme, deleteScheme } from "../../lib/LocalStorage";
-import { NavLink } from "react-router-dom";
 
 interface MatchParams {
   schemeId: string;
@@ -15,7 +14,7 @@ interface Props extends RouteComponentProps<MatchParams> { }
 
 interface State {
   scheme: ColorScheme;
-  editName: boolean;
+  saved: boolean;
 }
 
 class SchemeEditor extends React.Component<Props, State> {
@@ -24,8 +23,12 @@ class SchemeEditor extends React.Component<Props, State> {
     let scheme = this.getScheme(props);
     this.state = {
       scheme,
-      editName: true
+      saved: false
     };
+  }
+
+  componentDidUpdate() {
+    this.save();
   }
 
   getScheme(props: Props) {
@@ -54,7 +57,10 @@ class SchemeEditor extends React.Component<Props, State> {
   save = () => {
     var { scheme } = this.state;
     saveScheme(scheme);
-    this.props.history.push("/scheme/" + scheme.id);
+    if (!this.state.saved) {
+      this.setState({ saved: true })
+    }
+    // this.props.history.push("/scheme/" + scheme.id);
   };
 
   delete = () => {
@@ -72,6 +78,14 @@ class SchemeEditor extends React.Component<Props, State> {
     this.setState({ scheme });
   }
 
+  back = () => {
+    if (this.state.saved) {
+      this.props.history.push("/scheme/" + this.state.scheme.id);
+    } else {
+      this.props.history.push("/");
+    }
+  }
+
   render() {
     var { scheme } = this.state;
     return (
@@ -81,7 +95,7 @@ class SchemeEditor extends React.Component<Props, State> {
         </div>
         {scheme.palettes.map(palette => (
           <div key={palette.id}>
-            <PaletteEditor palette={palette}></PaletteEditor>
+            <PaletteEditor notifyChange={this.save} palette={palette}></PaletteEditor>
             <button onClick={() => this.deletePalette(palette.id)}>Delete</button>
           </div>
         ))}
@@ -92,9 +106,7 @@ class SchemeEditor extends React.Component<Props, State> {
         </div>
         <div>
           <button onClick={this.save}>Save</button>
-          <NavLink to={"/scheme/" + scheme.id}>
-            <button>Cancel</button>
-          </NavLink>
+          <button onClick={this.back}>Back</button>
           <button onClick={this.delete}>Delete</button>
         </div>
       </div>

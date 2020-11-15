@@ -8,13 +8,13 @@ interface Props {
   color?: string;
 }
 
-const TextInput: React.SFC<Props> = (props: Props) => {
+const TextInput: React.FunctionComponent<Props> = (props: Props) => {
   let color = props.color || "#000000";
   return (
     <input
       type="text"
       style={{ color }}
-      value={props.value}
+      value={props.value || ''}
       className={styles.defaultInput}
       onChange={e => props.onChange(e.target.value)}
       placeholder={props.placeholder}

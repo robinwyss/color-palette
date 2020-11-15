@@ -6,6 +6,7 @@ import TextInput from "../../../components/TextInput";
 
 interface Props {
   palette?: ColorPalette;
+  notifyChange: () => void
 }
 
 interface State {
@@ -23,16 +24,14 @@ class PaletteEditor extends React.Component<Props, State> {
   addColor = () => {
     var { palette } = this.state;
     palette.colors.push(new Color())
+    this.props.notifyChange();
     this.setState({ palette });
   };
-
-  setColorName(color: Color, name: string) {
-    color.name = name;
-  }
 
   updateName = (name: string) => {
     var { palette } = this.state;
     palette.name = name;
+    this.props.notifyChange();
     this.setState({ palette });
   };
 
@@ -42,6 +41,7 @@ class PaletteEditor extends React.Component<Props, State> {
     if (index >= 0) {
       palette.colors.splice(index, 1);
     }
+    this.props.notifyChange();
     this.setState({ palette });
   }
 
@@ -56,7 +56,7 @@ class PaletteEditor extends React.Component<Props, State> {
           <div className={styles.colorPalette}>
             {palette.colors.map(color => (
               <div key={color.id} className={styles.colorItem}>
-                <ColorEditor color={color}></ColorEditor>
+                <ColorEditor notifyChange={this.props.notifyChange} color={color}></ColorEditor>
                 <button onClick={() => this.deleteColor(color.id)}>Delete</button>
               </div>
             ))}
