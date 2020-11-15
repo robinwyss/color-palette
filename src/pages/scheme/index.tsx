@@ -43,6 +43,7 @@ class Scheme extends React.Component<Props, State> {
           </div>
         ))}
         <NavLink to={"/editor/" + scheme.id}>Edit</NavLink>
+        <NavLink to="/">Back</NavLink>
         <Exporter scheme={scheme}></Exporter>
       </div>
     );

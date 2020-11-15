@@ -10,7 +10,7 @@ const Palette: React.FC<PaletteProps> = ({ palette }) => {
   return (
     <div className={styles.colorPalette}>
       {palette.colors.map(c => (
-        <div key={c.name} className={styles.color} style={{ backgroundColor: c.colorCode }}>
+        <div key={c.id} className={styles.color} style={{ backgroundColor: c.colorCode }}>
           {c.colorCode} - {c.name}
         </div>
       ))}
