@@ -7,7 +7,9 @@ interface Props {
   scheme: ColorScheme;
 }
 
-const Exporter: React.SFC<Props> = ({ scheme }) => {
+const Exporter: React.FunctionComponent<Props> = ({ scheme }) => {
+
+
   return (
     <div>
       <button onClick={() => downloadSchemeAsPng(scheme)}>download png</button>
